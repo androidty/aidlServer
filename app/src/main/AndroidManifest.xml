@@ -18,7 +18,7 @@
         </activity>
 
         <service android:name="com.qibeigo.aidl.MyService"
-            android:process=":remote"
+
             >
             <intent-filter>
                 <action android:name="com.qibeigo.aidlserver.MyService"></action>

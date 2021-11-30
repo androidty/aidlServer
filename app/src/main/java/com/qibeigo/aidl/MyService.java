@@ -26,6 +26,7 @@ package com.qibeigo.aidl;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -45,11 +46,11 @@ public class MyService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("TAGBind", "onBind: ");
+        Log.d("current", "onBind: "+Thread.currentThread().getName());
         return new IBookManager.Stub(){
             @Override
             public String getName() throws RemoteException {
-                return "test";
+                return "server response is test";
             }
 
             @Override
@@ -60,6 +61,17 @@ public class MyService extends Service {
             @Override
             public List<Book> getBookList() throws RemoteException {
                 return mBooks;
+            }
+
+            @Override
+            public int addNum(int num1, int num2) throws RemoteException {
+                try {
+                    Log.d("current", "addNum: "+Thread.currentThread().getName());
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return num1+num2;
             }
         };
     }
